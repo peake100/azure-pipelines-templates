@@ -22,6 +22,10 @@ steps:
   - script: |
       pytest --doctest-modules --junitxml=junit/test-results.xml
     displayName: 'pytest'
+    env:
+      DISCORD_TOKEN_TEST: $(DISCORD_TOKEN_TEST)
+      TEST_CLIENT_DISCORD_TOKEN: $(TEST_CLIENT_DISCORD_TOKEN)
+      TEST_CLIENT_DISCORD_TOKEN2: $(TEST_CLIENT_DISCORD_TOKEN2)
 
   - task: PublishTestResults@2
     inputs:
