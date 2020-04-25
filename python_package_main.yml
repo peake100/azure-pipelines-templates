@@ -42,7 +42,7 @@ parameters:
   # Whether to publish docs to S3.
   - name: publishDocsS3
     type: boolean
-    default: true
+    default: false
 
 
 jobs:
