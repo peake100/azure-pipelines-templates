@@ -86,7 +86,9 @@ jobs:
     - script: python3 $(BUILD_SCRIPTS_DIR)/get_release_version.py
       displayName: 'get release version'
       env:
-        PublishLanguage: "PYTHON"
+        # Since we aren't publishing to pypi or a container registry, we want to use
+        # the go method of checking git tags
+        PublishLanguage: "GO"
       condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
 
     - script: |
