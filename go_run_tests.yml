@@ -5,14 +5,7 @@ parameters:
 steps:
 - script: |
     mkdir ./reports
-    set -o pipefail
-    go test \
-    -v \
-    -covermode=count \
-    -coverpkg=./... \
-    -coverprofile=coverage.out \
-    ./... \
-    -minimum-coverage=${{ parameters.minimumCoverage }} \
+    python3 ./zdevelop/make_scripts/make_test.py \
     2>&1 \
     | tee ./reports/testResults.txt
   displayName: 'Run Tests'
