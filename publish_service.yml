@@ -40,5 +40,5 @@ steps:
 - script: docker push $REGISTRY_URL/$SERVICE_NAME
   displayName: 'Upload Image'
   env:
-    REGISTRY_URL: $(CONTAINER_REGISTRY_URL)
+    REGISTRY_NAME: $(CONTAINER_REGISTRY_NAME)
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
