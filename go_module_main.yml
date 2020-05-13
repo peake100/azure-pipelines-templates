@@ -35,6 +35,11 @@ parameters:
     type: boolean
     default: false
 
+  # Whether to build and publish a docker container.
+  - name: publishContainer
+    type: boolean
+    default: false
+
 jobs:
 
 - job: 'Test_Lint_Build'
@@ -87,6 +92,10 @@ jobs:
       parameters:
         publishDocs: ${{ parameters.publishDocs }}
         publishDocsS3: ${{ parameters.publishDocsS3 }}
+
+    # If we are publishing a docker service, do it here.
+    - ${{ if eq(parameters.publishContainer, true) }}:
+        - template: publish_service.yml
 
     # Merge build to master and tag as release version (this is how go modules are
     # published).

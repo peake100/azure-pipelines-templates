@@ -41,6 +41,3 @@ steps:
   env:
     REGISTRY_URL: $(CONTAINER_REGISTRY_URL)
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
-
-# Merge build to master and tag as release version.
-- template: git_update_master_version.yml

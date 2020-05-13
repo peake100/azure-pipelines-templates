@@ -97,6 +97,9 @@ jobs:
         publishDocsS3: ${{ parameters.publishDocsS3 }}
 
     # Publish package to pypi and master
-    - template: python_publish_service.yml
+    - template: publish_service.yml
       parameters:
         pypiAzureArtifactFeed: ${{ parameters.pypiAzureArtifactFeed }}
+
+    # Merge build to master and tag as release version.
+    - template: git_update_master_version.yml
