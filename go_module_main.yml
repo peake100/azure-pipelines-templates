@@ -45,6 +45,11 @@ parameters:
     type: boolean
     default: false
 
+  # Whether to install protocol buffer compiler.
+  - name: installRedoc
+    type: boolean
+    default: false
+
 jobs:
 
 - job: 'Test_Lint_Build'
@@ -72,17 +77,6 @@ jobs:
       parameters:
         goVersionLink: ${{ parameters.goVersionLinkLinux }}
 
-    # install protoc
-    - script: |
-        PROTOC_ZIP=protoc-3.7.1-linux-x86_64.zip
-        curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v3.7.1/$PROTOC_ZIP
-        sudo unzip -o $PROTOC_ZIP -d /usr/local bin/protoc
-        sudo unzip -o $PROTOC_ZIP -d /usr/local 'include/*'
-        rm -f $PROTOC_ZIP
-        go install "github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger"
-      displayName: install protobuff
-      condition: and(succeeded(), ${{ parameters.installProtoc }})
-
     # Get Repo Name
     - script: python3 $(BUILD_SCRIPTS_DIR)/get_repo_name.py
       displayName: 'Get repo name'
@@ -108,6 +102,8 @@ jobs:
       parameters:
         publishDocs: ${{ parameters.publishDocs }}
         publishDocsS3: ${{ parameters.publishDocsS3 }}
+        installProtoc: ${{ parameters.installProtoc }}
+        installRedoc: ${{ parameters.installRedoc }}
 
     # If we are publishing a docker service, do it here.
     - ${{ if eq(parameters.publishContainer, true) }}:

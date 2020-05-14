@@ -8,7 +8,39 @@ parameters:
   - name: publishDocsS3
     type: boolean
 
+  # Whether redoc is needed
+  - name: installRedoc
+    type: boolean
+
+  - name: installProtoc
+    type: boolean
+
 steps:
+  # install protoc
+  - script: |
+      PROTOC_ZIP=protoc-3.7.1-linux-x86_64.zip
+      curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v3.7.1/$PROTOC_ZIP
+      sudo unzip -o $PROTOC_ZIP -d /usr/local bin/protoc
+      sudo unzip -o $PROTOC_ZIP -d /usr/local 'include/*'
+      rm -f $PROTOC_ZIP
+      go install "github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger"
+    displayName: install protoc for docgen
+    condition: |
+      and(
+        succeeded(),
+        ${{ parameters.installProtoc }},
+        eq(variables['Build.SourceBranch'], 'refs/heads/dev')
+      )
+
+
+  - script: npm install -g npx
+    displayName: 'install npx for redoc'
+    condition: |
+      and(
+        succeeded(),
+        ${{ parameters.installRedoc }},
+        eq(variables['Build.SourceBranch'], 'refs/heads/dev')
+      )
 
   # Build API documentation. We just need to build the source static html files here
   # and sphinx can use them.
