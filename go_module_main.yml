@@ -60,6 +60,11 @@ jobs:
     vmImage: 'ubuntu-16.04'
 
   steps:
+    # Check out any submodules in the project
+    - checkout: self
+      submodules: recursive
+      persistCredentials: true
+
     # Setup git environment
     - template: git_setup.yml
 
