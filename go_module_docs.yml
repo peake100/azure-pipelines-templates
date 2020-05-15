@@ -32,16 +32,6 @@ steps:
         eq(variables['Build.SourceBranch'], 'refs/heads/dev')
       )
 
-
-  - script: sudo npm install -g npx
-    displayName: 'install npx for redoc'
-    condition: |
-      and(
-        succeeded(),
-        ${{ parameters.installRedoc }},
-        eq(variables['Build.SourceBranch'], 'refs/heads/dev')
-      )
-
   # Build API documentation. We just need to build the source static html files here
   # and sphinx can use them.
   - script: docmodule-go
