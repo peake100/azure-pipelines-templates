@@ -24,6 +24,7 @@ steps:
       sudo unzip -o $PROTOC_ZIP -d /usr/local 'include/*'
       rm -f $PROTOC_ZIP
       go install "github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger"
+      go install "github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc"
     displayName: install protoc for docgen
     condition: |
       and(
