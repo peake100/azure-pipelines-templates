@@ -33,7 +33,7 @@ steps:
       )
 
 
-  - script: npm install -g npx
+  - script: npm install -g npx --unsafe-perm=true --allow-root
     displayName: 'install npx for redoc'
     condition: |
       and(
