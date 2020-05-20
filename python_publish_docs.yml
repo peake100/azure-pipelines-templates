@@ -25,7 +25,20 @@ steps:
   - task: Go@0
     inputs:
       command: 'get'
-      arguments: "github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc"
+      arguments: "-d github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc"
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      displayName: install protoc-gen-doc for docgen
+      condition: |
+        and(
+          succeeded(),
+          ${{ parameters.installProtoc }},
+          eq(variables['Build.SourceBranch'], 'refs/heads/dev')
+        )
+
+  - task: Go@0
+    inputs:
+      command: 'custom'
+      arguments: "install github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc"
       workingDirectory: '$(System.DefaultWorkingDirectory)'
       displayName: install protoc-gen-doc for docgen
       condition: |
@@ -38,7 +51,7 @@ steps:
   - task: Go@0
     inputs:
       command: 'get'
-      arguments: "github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger"
+      arguments: "-d github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger"
       workingDirectory: '$(System.DefaultWorkingDirectory)'
       displayName: install protoc-gen-swagger for docgen
       condition: |
