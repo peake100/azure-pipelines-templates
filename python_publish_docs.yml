@@ -8,8 +8,26 @@ parameters:
   - name: publishDocsS3
     type: boolean
 
+  - name: installProtoc
+    type: boolean
 
 steps:
+  # install protoc
+  - script: |
+      PROTOC_ZIP=protoc-3.7.1-linux-x86_64.zip
+      curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v3.7.1/$PROTOC_ZIP
+      sudo unzip -o $PROTOC_ZIP -d /usr/local bin/protoc
+      sudo unzip -o $PROTOC_ZIP -d /usr/local 'include/*'
+      rm -f $PROTOC_ZIP
+      go install "github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger"
+      go install "github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc"
+    displayName: install protoc for docgen
+    condition: |
+      and(
+        succeeded(),
+        ${{ parameters.installProtoc }},
+        eq(variables['Build.SourceBranch'], 'refs/heads/dev')
+      )
 
   # Build Documentation With Sphinx
   - script: python setup.py build_sphinx -E

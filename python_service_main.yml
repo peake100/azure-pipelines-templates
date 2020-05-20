@@ -37,7 +37,11 @@ parameters:
   # Whether to publish docs to S3.
   - name: publishDocsS3
     type: boolean
-    default: true
+    default: false
+
+  # Whether we need to install protoc to generate documentation
+  - name: installProtoc
+    type: boolean
 
 jobs:
 
@@ -85,10 +89,7 @@ jobs:
     - script: python3 $(BUILD_SCRIPTS_DIR)/get_release_version.py
       displayName: 'get release version'
       env:
-        PublishLanguage: "PYTHON_SERVICE"
-        DOCKER_ID: $(CONTAINER_REGISTRY_ID)
-        DOCKER_PASSWORD: $(CONTAINER_REGISTRY_PASSWORD)
-        REGISTRY_URL: $(CONTAINER_REGISTRY_URL)
+        PublishLanguage: "GO"
       condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
 
     - script: |
@@ -100,6 +101,7 @@ jobs:
       parameters:
         publishDocs: ${{ parameters.publishDocs }}
         publishDocsS3: ${{ parameters.publishDocsS3 }}
+        installProtoc: ${{ parameters.installProtoc }}
 
     # Publish package to pypi and master
     - template: publish_service.yml
