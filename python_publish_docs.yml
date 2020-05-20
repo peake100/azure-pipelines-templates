@@ -11,9 +11,6 @@ parameters:
   - name: installProtoc
     type: boolean
 
-variables:
-
-
 steps:
   - task: GoTool@0
     inputs:
