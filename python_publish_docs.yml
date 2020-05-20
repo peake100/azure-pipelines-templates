@@ -22,33 +22,6 @@ steps:
         eq(variables['Build.SourceBranch'], 'refs/heads/dev')
       )
 
-  - task: Go@0
-    inputs:
-      command: 'get'
-      arguments: "-d github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc"
-      workingDirectory: '$(System.DefaultWorkingDirectory)'
-      displayName: download protoc-gen-doc for docgen
-      condition: |
-        and(
-          succeeded(),
-          ${{ parameters.installProtoc }},
-          eq(variables['Build.SourceBranch'], 'refs/heads/dev')
-        )
-
-  - task: Go@0
-    inputs:
-      command: "custom"
-      customCommand: "install"
-      arguments: "github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc"
-      workingDirectory: '$(System.DefaultWorkingDirectory)'
-      displayName: install protoc-gen-doc for docgen
-      condition: |
-        and(
-          succeeded(),
-          ${{ parameters.installProtoc }},
-          eq(variables['Build.SourceBranch'], 'refs/heads/dev')
-        )
-
   # install protoc
   - script: |
       PROTOC_ZIP=protoc-3.7.1-linux-x86_64.zip
@@ -63,6 +36,19 @@ steps:
         ${{ parameters.installProtoc }},
         eq(variables['Build.SourceBranch'], 'refs/heads/dev')
       )
+
+  - task: Go@0
+    inputs:
+      command: 'get'
+      arguments: "-u github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc"
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      displayName: download protoc-gen-doc for docgen
+      condition: |
+        and(
+          succeeded(),
+          ${{ parameters.installProtoc }},
+          eq(variables['Build.SourceBranch'], 'refs/heads/dev')
+        )
 
   # Build Documentation With Sphinx
   - script: python setup.py build_sphinx -E
