@@ -1,6 +1,6 @@
 variables:
   # Go binaries path.
-  GOBIN: '/opt/hostedtoolcache/go'
+  GOBIN: '/opt/hostedtoolcache/go/bin'
 
   # YOUR PRIVATE REPO GOES HERE LEAVE BLANK TO NOT USE.
   PIP_INDEX_URL:
