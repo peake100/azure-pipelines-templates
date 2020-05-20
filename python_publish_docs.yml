@@ -12,7 +12,7 @@ parameters:
     type: boolean
 
 variables:
-  GOBIN:  '$(GOPATH)/bin'
+
 
 steps:
   - task: GoTool@0

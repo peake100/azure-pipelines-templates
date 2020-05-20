@@ -1,8 +1,6 @@
 variables:
-  # Go installation path.
-  GOROOT: '$(Agent.BuildDirectory)/go'
   # Go binaries path.
-  GOBIN:  '$(Agent.BuildDirectory)/gobin'
+  GOBIN:  '$(GOPATH)/bin'
 
   # YOUR PRIVATE REPO GOES HERE LEAVE BLANK TO NOT USE.
   PIP_INDEX_URL:
