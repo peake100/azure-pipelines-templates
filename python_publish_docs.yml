@@ -11,6 +11,9 @@ parameters:
   - name: installProtoc
     type: boolean
 
+variables:
+  GOBIN:  '$(GOPATH)/bin'
+
 steps:
   - task: GoTool@0
     inputs:
@@ -36,6 +39,9 @@ steps:
         ${{ parameters.installProtoc }},
         eq(variables['Build.SourceBranch'], 'refs/heads/dev')
       )
+
+  - script: echo $GOBIN
+    displayName: debug gobin
 
   - task: Go@0
     inputs:
