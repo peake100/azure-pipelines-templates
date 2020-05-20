@@ -24,7 +24,7 @@ steps:
 
   - task: Go@0
     inputs:
-      command: "install"
+      command: 'get'
       arguments: "github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc"
       workingDirectory: '$(System.DefaultWorkingDirectory)'
       displayName: install protoc-gen-doc for docgen
@@ -37,7 +37,7 @@ steps:
 
   - task: Go@0
     inputs:
-      command: "install"
+      command: 'get'
       arguments: "github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger"
       workingDirectory: '$(System.DefaultWorkingDirectory)'
       displayName: install protoc-gen-swagger for docgen
