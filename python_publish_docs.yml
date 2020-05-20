@@ -12,6 +12,24 @@ parameters:
     type: boolean
 
 steps:
+  - script: echo '##vso[task.prependpath]$(GOBIN)'
+    displayName: add gobin to path
+    condition: |
+      and(
+        succeeded(),
+        ${{ parameters.installProtoc }},
+        eq(variables['Build.SourceBranch'], 'refs/heads/dev')
+      )
+
+  - script: echo '$(GOBIN)'
+    displayName: debug gobin
+    condition: |
+      and(
+        succeeded(),
+        ${{ parameters.installProtoc }},
+        eq(variables['Build.SourceBranch'], 'refs/heads/dev')
+      )
+
   - task: GoTool@0
     inputs:
       version: '1.14'
@@ -36,9 +54,6 @@ steps:
         ${{ parameters.installProtoc }},
         eq(variables['Build.SourceBranch'], 'refs/heads/dev')
       )
-
-  - script: echo $GOBIN
-    displayName: debug gobin
 
   - task: Go@0
     inputs:
