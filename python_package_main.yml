@@ -58,7 +58,6 @@ jobs:
     # Check out any submodules in the project
     - checkout: self
       submodules: recursive
-      persistCredentials: true
 
     # Setup git environment
     - template: git_setup.yml
