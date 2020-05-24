@@ -44,6 +44,10 @@ parameters:
     type: boolean
     default: false
 
+  - name: installProtoc
+    type: boolean
+    default: false
+
 
 jobs:
 
@@ -104,6 +108,7 @@ jobs:
       parameters:
         publishDocs: ${{ parameters.publishDocs }}
         publishDocsS3: ${{ parameters.publishDocsS3 }}
+        installProtoc: ${{ parameters.installProtoc }}
 
     # Publish package to pypi and master
     - template: python_publish_package.yml

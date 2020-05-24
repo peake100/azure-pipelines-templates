@@ -42,6 +42,7 @@ parameters:
   # Whether we need to install protoc to generate documentation
   - name: installProtoc
     type: boolean
+    default: false
 
 jobs:
 
